@@ -2,39 +2,23 @@
 #define MONTY_H
 
 #include <stdio.h>
-#include <stdlib.h>
 
-/* Structure to represent the stack */
+#define STACK_SIZE 100
+
 typedef struct {
-    int stack[1000];
+    int array[STACK_SIZE];
     int top;
-    int mode;  /* 0 for stack, 1 for queue */
-} Stack;
+} MontyStack;
 
-extern Stack stack;
-extern FILE *file;
-
-/* Monty opcode functions */
-void push(int value);
-void pall(void);
-void pint(void);
-void pop(void);
-void swap(void);
-void add(void);
-void sub(void);
-void mul(void);
-void div_op(void);
-void mod_op(void);
+void push(int value, MontyStack *stack);
+int pop(MontyStack *stack);
+void pint(MontyStack *stack);
+void swap(MontyStack *stack);
+void add(MontyStack *stack);
+void sub(MontyStack *stack);
+void mul(MontyStack *stack);
+void div_op(MontyStack *stack, unsigned int line_number);
+void mod_op(MontyStack *stack);
 void nop(void);
-void pchar_op(void);
-void pstr_op(void);
-void rotl_op(void);
-void rotr_op(void);
-void stack_op(void);
-void queue_op(void);
-
-/* Brainf*ck interpreter function */
-void execute_bf(const char *filename);
 
 #endif /* MONTY_H */
-

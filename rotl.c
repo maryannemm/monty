@@ -1,18 +1,14 @@
-/* rotl.c */
-
 #include "monty.h"
+#include <stdlib.h>
+#include <string.h>
 
-/**
- * rotl_op - Rotates the stack to the top
- */
-void rotl_op(void)
-{
-    if (stack.top > 0) {
-        int temp = stack.stack[stack.top];
-        for (int i = 0; i < stack.top; i++) {
-            stack.stack[i] = stack.stack[i + 1];
-        }
-        stack.stack[stack.top] = temp;
+void rotl_op(MontyStack *stack) {
+    if (stack->top > 0) {
+        int temp = stack->array[0];
+
+        /* Shift elements to the left */
+        memmove(stack->array, stack->array + 1, stack->top * sizeof(int));
+
+        stack->array[stack->top] = temp;
     }
 }
-

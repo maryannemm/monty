@@ -1,30 +1,19 @@
 /* stack_queue.c */
-
 #include "monty.h"
+#include <stdlib.h>
+#include <string.h>
 
-/**
- * stack_op - Sets the format of the data to a stack (LIFO)
- */
-void stack_op(void)
-{
-    (void)stack;  /* Unused parameter */
-    /* Do nothing, as the default behavior is stack (LIFO) */
-}
+void queue_op(MontyStack *stack) {
+    if (stack->top >= 0) {
+        int temp = stack->array[0];
 
-/**
- * queue_op - Sets the format of the data to a queue (FIFO)
- */
-void queue_op(void)
-{
-    int front = 0;
-    int rear = stack.top;
+        /* Shift elements to the left */
+        memmove(stack->array, stack->array + 1, stack->top * sizeof(int));
 
-    while (front < rear) {
-        int temp = stack.stack[front];
-        stack.stack[front] = stack.stack[rear];
-        stack.stack[rear] = temp;
-        front++;
-        rear--;
+        stack->array[stack->top] = temp;
+    } else {
+        fprintf(stderr, "Error: can't queue, stack empty\n");
+        exit(EXIT_FAILURE);
     }
 }
 

@@ -1,47 +1,57 @@
-/* monty.c */
-
-#include "monty.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "monty.h"
 
-/* Function declarations */
-void push(int value);
-int pop(void);
-void pint(void);
-void swap(void);
-void add(void);
-void sub(void);
-void nop(void);
-void execute_opcode(const char *opcode);
-
-/* Global variables */
-MontyStack stack;
-
-/* Main function */
-int main(int argc, char *argv[])
-{
-    if (argc != 2) {
-        fprintf(stderr, "USAGE: %s file\n", argv[0]);
+void push(int value, MontyStack *stack) {
+    if (stack->top < STACK_SIZE - 1) {
+        stack->top++;
+        stack->array[stack->top] = value;
+    } else {
+        fprintf(stderr, "Error: Stack overflow\n");
         exit(EXIT_FAILURE);
     }
-
-    FILE *file = fopen(argv[1], "r");
-    if (file == NULL) {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-        exit(EXIT_FAILURE);
-    }
-
-    char opcode[256];
-    int value;
-
-    stack.top = -1;
-
-    while (fscanf(file, "%s", opcode) != EOF) {
-        execute_opcode(opcode);
-    }
-
-    fclose(file);
-
-    return EXIT_SUCCESS;
 }
+
+int pop(MontyStack *stack) {
+    if (stack->top >= 0) {
+        return stack->array[stack->top--];
+    } else {
+        fprintf(stderr, "Error: Stack empty\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void pint(MontyStack *stack) {
+    if (stack->top >= 0) {
+        printf("%d\n", stack->array[stack->top]);
+    } else {
+        fprintf(stderr, "Error: can't pint, stack empty\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void swap(MontyStack *stack) {
+    if (stack->top >= 1) {
+        int temp = stack->array[stack->top];
+        stack->array[stack->top] = stack->array[stack->top - 1];
+        stack->array[stack->top - 1] = temp;
+    } else {
+        fprintf(stderr, "Error: can't swap, stack too short\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void add(MontyStack *stack) {
+    if (stack->top < 1) {
+        fprintf(stderr, "Error: can't add, stack too short\n");
+        exit(EXIT_FAILURE);
+    }
+
+    stack->array[stack->top - 1] += stack->array[stack->top];
+    pop(stack);
+}
+
+void nop(void) {
+    /* Does nothing */
+}
+
