@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "monty.h"
+#include "main.h"
 
-void sub(MontyStack *stack) {
-    if (stack->top < 1) {
-        fprintf(stderr, "Error: can't sub, stack too short\n");
+extern Stack stack;
+
+void sub(int line_number) {
+    if (stack.top < 1) {
+        fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
         exit(EXIT_FAILURE);
     }
 
-    stack->array[stack->top - 1] -= stack->array[stack->top];
-    pop(stack);
+    stack.stack[stack.top - 1] -= stack.stack[stack.top];
+    pop(line_number);
 }
+

@@ -1,15 +1,22 @@
-/* rotr.c */
-#include "monty.h"
-#include <stdlib.h>
-#include <string.h>
+#include "main.h"
 
-void rotr_op(MontyStack *stack) {
-    if (stack->top > 0) {
-        int temp = stack->array[stack->top];
+/**
+ * rotr - Rotates the stack to the bottom.
+ * @line_number: The line number.
+ */
+void rotr(int line_number __attribute__((unused))) {
+    int temp;
 
-        /* Shift elements to the right */
-        memmove(stack->array + 1, stack->array, stack->top * sizeof(int));
+    if (stack.top > 0) {
+        int i = stack.top;
+        temp = stack.stack[i];
 
-        stack->array[0] = temp;
+        while (i > 0) {
+            stack.stack[i] = stack.stack[i - 1];
+            i--;
+        }
+
+        stack.stack[0] = temp;
     }
 }
+

@@ -1,14 +1,16 @@
-#include "monty.h"
-#include <stdlib.h>
-#include <string.h>
+#include "main.h"
 
-void rotl_op(MontyStack *stack) {
-    if (stack->top > 0) {
-        int temp = stack->array[0];
+/**
+ * rotl - Rotates the stack to the top.
+ * @line_number: The line number.
+ */
+void rotl(int line_number __attribute__((unused))) {
+    int temp;
 
-        /* Shift elements to the left */
-        memmove(stack->array, stack->array + 1, stack->top * sizeof(int));
-
-        stack->array[stack->top] = temp;
+    if (stack.top > 0) {
+        temp = stack.stack[0];
+        stack.stack[0] = stack.stack[stack.top];
+        stack.stack[stack.top] = temp;
     }
 }
+

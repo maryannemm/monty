@@ -1,14 +1,19 @@
-/* pstr.c */
 #include <stdio.h>
 #include <stdlib.h>
-#include "monty.h"
+#include "main.h"
 
-void pstr_op(MontyStack *stack) {
-    int i = stack->top;
+void pstr(int line_number __attribute__((unused)) ) {
+    int value;
 
-    while (i >= 0 && stack->array[i] != 0 && (stack->array[i] >= 32 && stack->array[i] <= 127)) {
-        putchar(stack->array[i]);
-        i--;
+    while (stack.top != -1) {
+        value = stack.stack[stack.top];
+
+        if (value <= 0 || value > 127) {
+            break;
+        }
+
+        putchar(value);
+        stack.top--;
     }
 
     putchar('\n');
